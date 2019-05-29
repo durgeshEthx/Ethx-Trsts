@@ -13,11 +13,17 @@ var flash = require('connect-flash');
 
 var configDB = require('./config/db');
 require('./config/passport')(passport);
-mongoose.connect(configDB.url);
+mongoose.connect(configDB.url,{ useNewUrlParser: true });
 
 var routes = require('./routes/index');
 
 var app = express();
+
+
+
+app.use(bodyParser.urlencoded({extended: true}));
+
+
 
 app.use(session({
   secret: 'secret',
@@ -37,7 +43,7 @@ app.use(expressValidator({
     while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
     }
-    return {
+    return { 
       param : formParam,
       msg   : msg,
       value : value
@@ -72,25 +78,25 @@ app.use(function (req, res, next) {
 app.use('/', routes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 // error handlers
-
+ 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
+// if (app.get('env') === 'development') {
+//   app.use(function(err, req, res, next) {
+//     res.status(err.status || 500);
+//     res.render('error', {
+//       message: err.message,
+//       error: err
+//     });
+//   });
+// }
 
 // production error handler
 // no stacktraces leaked to user
@@ -104,3 +110,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+

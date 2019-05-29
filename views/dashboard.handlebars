@@ -1,2 +1,19 @@
 <h1>{{title}}</h1>
-<h3>Welcome User</h3>
+<h3>Welcome {{body}}</h3>
+
+{{!-- create the uploading form here --}}
+{{!-- <form>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Example file input</label>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+  </div>
+</form> --}}
+{{!-- <form action="/profile" method="post" enctype="multipart/form-data">
+  <input type="file" name="avatar" />
+</form> --}}
+
+ <!--  SINGLE FILE -->
+<form action="/upload" enctype="multipart/form-data" method="POST"> 
+   <input type="file" name="photo"/>
+   <input type="submit" value="Upload a file"/>
+</form>
